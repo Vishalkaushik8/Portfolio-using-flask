@@ -1,23 +1,45 @@
 pipeline {
+
     agent any
+
+    environment {
+        APP_DIR = "/var/www/flaskapp"
+    }
 
     stages {
 
         stage('Clone Code') {
             steps {
-                git branch: 'main', url: 'https://github.com/Vishalkaushik8/Portfolio-using-flask.git'
+                git 'https://github.com/YOUR_USERNAME/YOUR_REPO.git'
+            }
+        }
+
+        stage('Prepare Folder') {
+            steps {
+                sh '''
+                rm -rf $APP_DIR/*
+                cp -r * $APP_DIR
+                '''
             }
         }
 
         stage('Install Dependencies') {
             steps {
-                sh 'pip3 install -r requirements.txt'
+                sh '''
+                cd $APP_DIR
+                python3 -m venv venv
+                source venv/bin/activate
+                pip install -r requirements.txt
+                pip install gunicorn
+                '''
             }
         }
 
-        stage('Run Application') {
+        stage('Restart Application') {
             steps {
-                sh 'python3 main.py'
+                sh '''
+                sudo systemctl restart flaskapp
+                '''
             }
         }
 
