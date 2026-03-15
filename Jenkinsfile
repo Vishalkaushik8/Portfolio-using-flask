@@ -16,7 +16,7 @@ pipeline {
 
         stage('Clone Code') {
             steps {
-                git 'https://github.com/Vishalkaushik8/Portfolio-using-flask.git'
+                git branch: 'main', url: 'https://github.com/Vishalkaushik8/Portfolio-using-flask.git'
             }
         }
 
