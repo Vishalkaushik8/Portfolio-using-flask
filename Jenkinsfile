@@ -8,6 +8,12 @@ pipeline {
 
     stages {
 
+        stage('Clean Workspace') {
+            steps {
+                cleanWs()
+            }
+        }
+
         stage('Clone Code') {
             steps {
                 git 'https://github.com/YOUR_USERNAME/YOUR_REPO.git'
@@ -17,8 +23,9 @@ pipeline {
         stage('Prepare Folder') {
             steps {
                 sh '''
-                rm -rf $APP_DIR/*
-                cp -r * $APP_DIR
+                sudo mkdir -p $APP_DIR
+                sudo rm -rf $APP_DIR/*
+                sudo cp -r * $APP_DIR
                 '''
             }
         }
@@ -27,8 +34,11 @@ pipeline {
             steps {
                 sh '''
                 cd $APP_DIR
-                python3 -m venv venv
+
+                python3 -m venv venv || true
                 source venv/bin/activate
+
+                pip install --upgrade pip
                 pip install -r requirements.txt
                 pip install gunicorn
                 '''
