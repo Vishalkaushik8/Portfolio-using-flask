@@ -5,19 +5,19 @@ pipeline {
 
         stage('Clone Code') {
             steps {
-                git 'https://github.com/Vishalkaushik8/Portfolio-using-flask.git'
+                git branch: 'main', url: 'https://github.com/Vishalkaushik8/Portfolio-using-flask.git'
             }
         }
 
         stage('Install Dependencies') {
             steps {
-                sh 'pip install -r requirements.txt'
+                sh 'pip3 install -r requirements.txt'
             }
         }
 
         stage('Run Application') {
             steps {
-                sh 'python main.py'
+                sh 'python3 main.py'
             }
         }
 
