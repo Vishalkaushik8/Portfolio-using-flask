@@ -1,0 +1,13 @@
+[Unit]
+Description=Flask Portfolio
+After=network.target
+
+[Service]
+User=ec2-user
+WorkingDirectory=/opt/flaskapp/portfolio-flask
+Environment="PATH=/opt/flaskapp/portfolio-flask/venv/bin"
+ExecStart=/opt/flaskapp/portfolio-flask/venv/bin/gunicorn --workers 3 --bind 127.0.0.1:8000 main:app
+
+[Install]
+WantedBy=multi-user.target
+
