@@ -1,6 +1,5 @@
 pipeline {
 
-
 agent any
 
 environment {
@@ -15,7 +14,7 @@ stages {
         }
     }
 
-    stage('Prepare Application Folder') {
+    stage('Prepare Folder') {
         steps {
             sh '''
             sudo mkdir -p $APP_DIR
@@ -25,7 +24,7 @@ stages {
         }
     }
 
-    stage('Setup Python Environment') {
+    stage('Install Dependencies') {
         steps {
             sh '''
             cd $APP_DIR
@@ -50,7 +49,7 @@ stages {
         }
     }
 
-    stage('Start Application') {
+    stage('Restart Application') {
         steps {
             sh '''
             sudo systemctl restart flaskapp
@@ -59,15 +58,5 @@ stages {
     }
 
 }
-
-post {
-    success {
-        echo "🚀 Flask application deployed successfully!"
-    }
-    failure {
-        echo "❌ Deployment failed"
-    }
-}
-```
 
 }
