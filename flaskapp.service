@@ -3,11 +3,15 @@ Description=Flask Portfolio
 After=network.target
 
 [Service]
-User=ec2-user
-WorkingDirectory=/opt/flaskapp/portfolio-flask
-Environment="PATH=/opt/flaskapp/portfolio-flask/venv/bin"
-ExecStart=/opt/flaskapp/portfolio-flask/venv/bin/gunicorn --workers 3 --bind 127.0.0.1:8000 main:app
+User=jenkins
+WorkingDirectory=/var/www/flaskapp
+
+ExecStart=/var/www/flaskapp/venv/bin/gunicorn \
+--workers 3 \
+--bind 0.0.0.0:8000 \
+main:app
+
+Restart=always
 
 [Install]
 WantedBy=multi-user.target
-
