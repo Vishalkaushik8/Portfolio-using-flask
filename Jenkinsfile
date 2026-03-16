@@ -8,18 +8,12 @@ environment {
 
 stages {
 
-    stage('Clean Workspace') {
-        steps {
-            cleanWs()
-        }
-    }
-
     stage('Prepare Folder') {
         steps {
             sh '''
             sudo mkdir -p $APP_DIR
             sudo rm -rf $APP_DIR/*
-            sudo cp -r * $APP_DIR
+            sudo cp -r . $APP_DIR
             '''
         }
     }
