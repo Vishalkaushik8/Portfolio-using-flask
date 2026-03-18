@@ -4,7 +4,7 @@ After=network.target
 
 [Service]
 User=jenkins
-WorkingDirectory=/var/www/ls
+WorkingDirectory=/var/www/flaskapp
 
 ExecStart=/var/www/flaskapp/venv/bin/gunicorn \
 --workers 3 \
