@@ -12,7 +12,6 @@ pipeline {
             steps {
                 sh '''
                 set -e
-
                 echo "Preparing application directory..."
 
                 sudo mkdir -p $APP_DIR
@@ -26,7 +25,6 @@ pipeline {
             steps {
                 sh '''
                 set -e
-
                 echo "Installing dependencies..."
 
                 cd $APP_DIR
@@ -45,11 +43,9 @@ pipeline {
             steps {
                 sh '''
                 set -e
-
                 echo "Installing systemd service..."
 
                 sudo cp $APP_DIR/flaskapp.service /etc/systemd/system/
-
                 sudo systemctl daemon-reload
                 sudo systemctl enable flaskapp
                 '''
@@ -60,24 +56,27 @@ pipeline {
             steps {
                 sh '''
                 set -e
-
                 echo "Restarting application..."
 
                 sudo systemctl restart flaskapp
-
-                # Check if service is running (IMPORTANT 🔥)
                 sudo systemctl status flaskapp
                 '''
             }
         }
 
+        // 🔴 TEMPORARY STAGE (FOR TESTING EMAIL)
+        stage('Test Fail') {
+            steps {
+                sh 'exit 1'
+            }
+        }
     }
 
     post {
 
         success {
             emailext (
-                to: 'your-email@gmail.com',
+                to: 'vishalsonipat428@gmail.com',
                 subject: "✅ SUCCESS: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
                 body: """
                 Build Successful 🎉
@@ -91,7 +90,7 @@ pipeline {
 
         failure {
             emailext (
-                to: 'your-email@gmail.com',
+                to: 'vishalsonipat428@gmail.com',
                 subject: "❌ FAILED: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
                 body: """
                 Build Failed ❌
