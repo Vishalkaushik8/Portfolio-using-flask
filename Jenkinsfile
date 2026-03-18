@@ -16,9 +16,9 @@ stages {
             sudo cp -r . $APP_DIR
             '''
         }
-    }
+    
 
-    stage('Install Dependencies') {
+    stage('Install Dependencies') 
         steps {
             sh '''
             cd $APP_DIR
